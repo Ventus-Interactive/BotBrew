@@ -69,21 +69,19 @@ def rt_auth_echo(data):
     return render_template("index.html", bot=f"{bot} : {os.getenv('api_owner')}", data=data)
 
 
-""" # open public api interface
-
+""" # Open User API
 @app.route("/echo/<string:data>", methods=("GET", "POST"))
 def rt_index(data):
+    # webpage route
     load_key()
     bot = data.split('`')[0]
     data = split_reply(chat(data))
     return render_template("index.html", bot=bot, data=data)
-"""
-
-
-""" # open public api
+    
 
 @app.route("/api/<string:data>", methods=("GET", "POST"))
-def rt_echo(data):
+def rt_api(data):
+    # open route
     load_key()
     r = split_reply(chat(data))
     return f"<p>{r}</p>"
