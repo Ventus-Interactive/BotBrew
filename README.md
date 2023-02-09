@@ -14,3 +14,8 @@ Chat bot API (flask-app template)
 #### Pip Requirements
 - openai
 - python-dotenv
+
+#### Webpage Interface
+- Create 'templates' folder in the same location as your 'flask_app.py'
+- In templates folder, create 'index.html'
+- Copy 'index.html' contents into the new 'index.html'
