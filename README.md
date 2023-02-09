@@ -7,6 +7,6 @@ Chat bot API (flask-app template)
 ### API Routes
 - Closed User API
   - Owned service for private use.
-- Open Public API
+- Open User API
   - Public Web service interface.
   - Unowned service for public use.
