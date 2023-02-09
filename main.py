@@ -61,12 +61,20 @@ app = Flask(__name__)
 
 
 # closed user api
-@app.route(f"/auth/{os.getenv('api_owner', 'none')}/<string:data>", methods=("GET", "POST"))
+@app.route(f"/echo/auth/{os.getenv('api_owner', 'none')}/<string:data>", methods=("GET", "POST"))
 def rt_auth_echo(data):
+    # webpage route
     load_key()
     bot = data.split('`')[0]
     data = split_reply(chat(data))
     return render_template("index.html", bot=f"{bot} : {os.getenv('api_owner')}", data=data)
+
+@app.route(f"/auth/{os.getenv('api_owner', 'none')}/<string:data>", methods=("GET", "POST"))
+def rt_auth_echo(data):
+    # closed route
+    load_key()
+    r = split_reply(chat(data))
+    return f"<p>{r}</p>"
 
 
 """ # Open User API
