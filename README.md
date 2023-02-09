@@ -10,3 +10,7 @@ Chat bot API (flask-app template)
 - Open User API
   - Public Web service interface.
   - Unowned service for public use.
+
+#### Pip Requirements
+- openai
+- python-dotenv
