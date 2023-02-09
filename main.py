@@ -5,9 +5,6 @@ import os, sys
 def load_key():
     openai.api_key = os.getenv("api_key")
 
-def contains(line, token):
-    return token in line
-
   
 def build_primer(content):
     primer = "You: "
@@ -17,45 +14,36 @@ def build_primer(content):
     return primer
 
 
-def chat(cinput):
+def chat(client_input):
     context = ""
-    ccinput = cinput.split('`')[0]
-    context += build_primer(ccinput)
-
+    botName = client_input.split('`')[0]
+    context += build_primer(botName)
+    
     contentBegin = len(context)
+    
     # Update the conversation context with the user's input
-    context += f"You: {cinput}\n"
+    context += f"You: {client_input}\n"
 
     response = openai.Completion.create(
-        engine="text-davinci-003",
-        #engine="text-curie-001",
+        engine="text-davinci-003",  # advanced
+        #engine="text-curie-001",   # simple
         prompt=(context + "OpenAI: "),
-        max_tokens = 256,
-        #max_tokens = 512,
-        #stop=[".", "\n"],
-        temperature=0.5
+        max_tokens = 256,   # see OpenAI site for 'tokens' description
+        #stop=[".", "\n"],  # consumes data until char is found
+        temperature=0.5     # determines 'randomness'
     )
 
     reply = response['choices'][0]['text']
 
     # Update the conversation context with the AI's response
     context += f"\nOpenAI: {reply}\n"
-    #context += '\n'
-
-    """
-    rlines = reply.split('\n')
-    p = "OpenAI: "
-    for line in rlines:
-        print(f"{p}", line)
-        p = " - "
-    """
-    print(context)
     return context[contentBegin:]
 
 
 from flask import Flask
 from flask import render_template
 from dotenv import load_dotenv
+
 
 # extracts response from content
 def split_reply(data):
@@ -65,10 +53,12 @@ def split_reply(data):
             return data[ii:]
     return data
 
+
 project_folder = os.path.expanduser('~/mysite')  # adjust as appropriate
 load_dotenv(os.path.join(project_folder, '.env'))
 
 app = Flask(__name__)
+
 
 # closed user api
 @app.route(f"/auth/{os.getenv('api_owner', 'none')}/<string:data>", methods=("GET", "POST"))
