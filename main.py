@@ -70,7 +70,7 @@ def rt_auth_echo(data):
     return render_template("index.html", bot=f"{bot} : {os.getenv('api_owner')}", data=data)
 
 @app.route(f"/auth/{os.getenv('api_owner', 'none')}/<string:data>", methods=("GET", "POST"))
-def rt_auth_echo(data):
+def rt_auth(data):
     # closed route
     load_key()
     r = split_reply(chat(data))
